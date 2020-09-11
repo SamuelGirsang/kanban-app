@@ -11,14 +11,19 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Organization.belongsToMany(models.User, {
-        through: models.Role
-      })
-      Organization.hasMany(models.Project)
+      Organization.hasMany(models.Task)
     }
   };
   Organization.init({
-    organization_name: DataTypes.STRING
+    organization_name: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty : {
+          args : true,
+          msg : 'Organization name must not empty!'
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'Organization',

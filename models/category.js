@@ -12,11 +12,18 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Category.hasMany(models.Task)
-      Category.belongsTo(models.Project)
     }
   };
   Category.init({
-    category: DataTypes.STRING
+    category_name: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty : {
+          args : true,
+          msg : 'Category name must not empty!'
+        }
+      }
+    },
   }, {
     sequelize,
     modelName: 'Category',

@@ -15,18 +15,33 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       User.hasMany(models.Task)
-      User.belongsToMany(models.Organization, {
-        through: models.Role
-      })
-      // User.belongsToMany(models.Task, {
-      //   through: models.Project
-      // })
     }
   };
   User.init({
     name: DataTypes.STRING,
-    email: DataTypes.STRING,
-    password: DataTypes.STRING
+    email: {
+      type: DataTypes.STRING,
+      validate: {
+        isEmail : {
+          args : true,
+          msg : 'Invalid email!'
+        }
+      },
+      unique : {
+        args : true,
+        msg : 'Email must be unique!'
+      }
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate : {
+        len : {
+          args : [4],
+          msg : 'Minimum password is four characters!'
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'User',

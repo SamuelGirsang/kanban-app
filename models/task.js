@@ -13,14 +13,31 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Task.belongsTo(models.User)
       Task.belongsTo(models.Category)
-      Task.belongsTo(models.Project)
-      // Task.belongsToMany(models.User, {
-      //   through: models.Project
-      // })
+      Task.belongsTo(models.Organization)
     }
   };
   Task.init({
-    title: DataTypes.STRING
+    title: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty : {
+          args : true,
+          msg : 'Title must not empty!'
+        }
+      }
+    },
+    UserId: DataTypes.INTEGER,
+    CategoryId: DataTypes.INTEGER,
+    OrganizationId: DataTypes.INTEGER,
+    description: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty : {
+          args : true,
+          msg : 'Title must not empty!'
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'Task',

@@ -4,6 +4,9 @@ function errorHandler (err, req, res, next) {
 
   let errors = []
   let statusCode = 500
+  console.log(err.name, "<<<<<<<<err.name");
+  console.log(err, "err");
+  console.log(err.message, "err.messg");
 
   if (err.name === 'SequelizeValidationError') {
     err.errors.forEach(error => {
@@ -16,10 +19,9 @@ function errorHandler (err, req, res, next) {
     statusCode = 401
   }
   else {
-    if (err.message <= 2) {
-      errors.push(err.message)
-      statusCode = err.statusCode || 500
-    }
+    errors.push(err.message)
+    statusCode = err.statusCode || 500
+    
   }
   return res.status(statusCode).json({ errors })
 }

@@ -8,19 +8,12 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-    await queryInterface.addColumn("Tasks", "ProjectId", { 
-      type: Sequelize.INTEGER,
-      references:{
-        model:"Projects",
-        key: 'id'
-      },
-      onUpdate: "CASCADE",
-      onDelete: "CASCADE"
-    });
+    await queryInterface.addColumn("Tasks", "description", Sequelize.STRING
+    );
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.removeColumn("Tasks", "ProjectId", {}) 
+    await queryInterface.removeColumn("Tasks", "description", {}) 
   }
 };
 
